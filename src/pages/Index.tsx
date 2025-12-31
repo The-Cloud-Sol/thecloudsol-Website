@@ -1,9 +1,19 @@
+import { Suspense, lazy } from "react";
 import { Hero } from "@/components/home/Hero";
-import { AboutSection } from "@/components/home/AboutSection";
 import { ServicePillars } from "@/components/home/ServicePillars";
-import { TestimonialsCarousel } from "@/components/home/TestimonialsCarousel";
-import { LogoCarousel } from "@/components/home/LogoCarousel";
-import { InfrastructureSection } from "@/components/home/InfrastructureSection";
+
+// Lazy load below-the-fold components with proper named export handling
+const AboutSection = lazy(() => import("@/components/home/AboutSection").then(module => ({ default: module.AboutSection })));
+const TestimonialsCarousel = lazy(() => import("@/components/home/TestimonialsCarousel").then(module => ({ default: module.TestimonialsCarousel })));
+const LogoCarousel = lazy(() => import("@/components/home/LogoCarousel").then(module => ({ default: module.LogoCarousel })));
+const InfrastructureSection = lazy(() => import("@/components/home/InfrastructureSection").then(module => ({ default: module.InfrastructureSection })));
+
+// Loading fallback for lazy components
+const ComponentLoadingFallback = () => (
+  <div className="flex items-center justify-center py-20">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500"></div>
+  </div>
+);
 
 // Client logos
 const clientLogos = [
@@ -45,25 +55,35 @@ const Index = () => {
   return (
     <div className="flex flex-col">
       <Hero />
-      <InfrastructureSection />
+      <Suspense fallback={<ComponentLoadingFallback />}>
+        <InfrastructureSection />
+      </Suspense>
       <div className="relative bg-gradient-to-b from-slate-950 via-slate-950/98 to-slate-950">
         <div className="absolute inset-0 bg-gradient-to-t from-transparent via-slate-950/30 to-transparent" />
-        <LogoCarousel 
-          title="Our Trusted Partners" 
-          images={partnerLogos} 
-          className="py-16 relative z-10" 
-        />
+        <Suspense fallback={<ComponentLoadingFallback />}>
+          <LogoCarousel 
+            title="Our Trusted Partners" 
+            images={partnerLogos} 
+            className="py-16 relative z-10" 
+          />
+        </Suspense>
       </div>
       <ServicePillars />
       <div className="relative bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-950">
-        <LogoCarousel 
-          title="Our Valued Clients" 
-          images={clientLogos} 
-          className="py-16" 
-        />
+        <Suspense fallback={<ComponentLoadingFallback />}>
+          <LogoCarousel 
+            title="Our Valued Clients" 
+            images={clientLogos} 
+            className="py-16 relative z-10" 
+          />
+        </Suspense>
       </div>
-      <AboutSection />
-      <TestimonialsCarousel />
+      <Suspense fallback={<ComponentLoadingFallback />}>
+        <AboutSection />
+      </Suspense>
+      <Suspense fallback={<ComponentLoadingFallback />}>
+        <TestimonialsCarousel />
+      </Suspense>
     </div>
   );
 };
