@@ -1,11 +1,16 @@
-import { useState } from "react";
-import DarkVeil from "@/components/home/DarkVeil";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Phone, Mail, MapPin, Building2, Users, Clock, CheckCircle, ArrowRight, FileText, Shield, Workflow, Layers3, Rocket } from 'lucide-react';
+import { toast } from 'sonner';
+import { getApiUrl, useEmailFallback } from '@/config/api';
 import {
   Select,
   SelectContent,
@@ -13,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FileText, CheckCircle, Shield, Workflow, Layers3, Rocket } from "lucide-react";
+import DarkVeil from "@/components/home/DarkVeil";
 import { useToast } from "@/hooks/use-toast";
 
 const services = [
@@ -52,7 +57,38 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/quote', {
+      // Check if we should use email fallback for static deployment
+      if (useEmailFallback()) {
+        // Create email content for fallback
+        const emailContent = `
+          New Quote Request from ${formData.name}
+          
+          Email: ${formData.email}
+          Phone: ${formData.phone}
+          Company: ${formData.company}
+          
+          Services Interested: ${selectedServices.join(', ')}
+          
+          Message: ${formData.details}
+        `;
+        
+        // Open email client with pre-filled content
+        const subject = encodeURIComponent('Quote Request - The Cloud Sol');
+        const body = encodeURIComponent(emailContent);
+        window.location.href = `mailto:tech.thecloudsol@gmail.com?subject=${subject}&body=${body}`;
+        
+        toast({
+          title: "Quote Request Initiated",
+          description: "Your email client has opened with the quote details. Please send the email to complete your request.",
+        });
+        
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Use API endpoint for development/production with backend
+      const apiUrl = getApiUrl('quote');
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

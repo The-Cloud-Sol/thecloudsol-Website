@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, Send, Shield, Building2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl, useEmailFallback } from '@/config/api';
 
 const contactHighlights = [
   {
@@ -42,7 +43,36 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      // Check if we should use email fallback for static deployment
+      if (useEmailFallback()) {
+        // Create email content for fallback
+        const emailContent = `
+          New Contact Message from ${formData.name}
+          
+          Email: ${formData.email}
+          Phone: ${formData.phone}
+          Company: ${formData.company}
+          
+          Message: ${formData.message}
+        `;
+        
+        // Open email client with pre-filled content
+        const subject = encodeURIComponent('Contact Message - The Cloud Sol');
+        const body = encodeURIComponent(emailContent);
+        window.location.href = `mailto:tech.thecloudsol@gmail.com?subject=${subject}&body=${body}`;
+        
+        toast({
+          title: "Contact Message Initiated",
+          description: "Your email client has opened with the message details. Please send the email to complete your request.",
+        });
+        
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Use API endpoint for development/production with backend
+      const apiUrl = getApiUrl('contact');
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
