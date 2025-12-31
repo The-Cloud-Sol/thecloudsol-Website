@@ -24,6 +24,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    outDir: "dist", // Explicitly set output directory
+    emptyOutDir: true, // Clean output directory
     assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
@@ -106,5 +108,9 @@ export default defineConfig(({ mode }) => ({
       },
     },
     chunkSizeWarningLimit: 500, // Back to standard limit - optimization successful
+  },
+  // Explicitly mark as Vite project for deployment platforms
+  define: {
+    __VITE_OPTIONS__: JSON.stringify({ framework: 'vite' }),
   },
 }));
