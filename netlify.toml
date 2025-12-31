@@ -4,12 +4,34 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  NPM_FLAGS = "--production=false"
+  NETLIFY_USE_YARN = "false"
+  # Explicitly disable Next.js detection
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
+# Explicitly configure as static site (not Next.js)
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+[context.production]
+  command = "npm run build"
+  publish = "dist"
+
+[context.deploy-preview]
+  command = "npm run build"
+  publish = "dist"
+
+[context.branch-deploy]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA routing for React Router
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -17,8 +39,24 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Explicitly mark as static site
+    X-Netlify-CDN-Cache-Control = "public, max-age=0, must-revalidate"
 
+# Asset caching for Vite build output
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
