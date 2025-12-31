@@ -95,7 +95,6 @@ export default defineConfig(({ mode }) => ({
           'misc-vendor': [
             'react-day-picker',
             'react-console-emulator',
-            'next-themes',
           ],
         },
         assetFileNames: (assetInfo) => {
