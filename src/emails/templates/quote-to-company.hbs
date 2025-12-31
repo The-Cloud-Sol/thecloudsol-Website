@@ -1,0 +1,348 @@
+{{!< base}}
+
+<div style="text-align: center; margin-bottom: 35px;">
+    <div style="display: inline-block; width: 100px; height: 100px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; margin-bottom: 25px; position: relative; box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;">💰</div>
+    </div>
+    <h1 class="alert-title">New Quote Request <span style="display: inline-block; background: #10b981; color: white; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-left: 10px;">HIGH VALUE</span></h1>
+    <p style="font-size: 18px; color: #475569; line-height: 1.7; max-width: 550px; margin: 0 auto;">
+        A potential client has requested a quote for your services. This is a high-value opportunity that requires immediate attention.
+    </p>
+</div>
+
+<div class="details-box">
+    <div style="display: flex; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <span style="font-weight: 700; color: #065f46; min-width: 130px; margin-right: 20px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">👤</span> Name:
+        </span>
+        <span style="flex: 1; color: #1e293b; font-size: 18px; font-weight: 600;">{{formData.name}}</span>
+    </div>
+    
+    <div style="display: flex; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <span style="font-weight: 700; color: #065f46; min-width: 130px; margin-right: 20px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">🏢</span> Company:
+        </span>
+        <span style="flex: 1; color: #1e293b; font-size: 18px; font-weight: 600;">{{formData.company}}</span>
+    </div>
+    
+    {{#if formData.designation}}
+    <div style="display: flex; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <span style="font-weight: 700; color: #065f46; min-width: 130px; margin-right: 20px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">💼</span> Designation:
+        </span>
+        <span style="flex: 1; color: #1e293b; font-size: 18px; font-weight: 600;">{{formData.designation}}</span>
+    </div>
+    {{/if}}
+    
+    <div style="display: flex; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <span style="font-weight: 700; color: #065f46; min-width: 130px; margin-right: 20px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">📧</span> Email:
+        </span>
+        <span style="flex: 1; color: #1e293b; font-size: 18px; font-weight: 600;">
+            <a href="mailto:{{formData.email}}" style="color: #10b981; text-decoration: none; font-weight: 600; transition: color 0.3s ease;" onmouseover="this.style.color='#059669'; this.style.textDecoration='underline';" onmouseout="this.style.color='#10b981'; this.style.textDecoration='none';">{{formData.email}}</a>
+        </span>
+    </div>
+    
+    <div style="display: flex; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <span style="font-weight: 700; color: #065f46; min-width: 130px; margin-right: 20px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">📱</span> Phone:
+        </span>
+        <span style="flex: 1; color: #1e293b; font-size: 18px; font-weight: 600;">
+            <a href="tel:{{formData.phone}}" style="color: #10b981; text-decoration: none; font-weight: 600; transition: color 0.3s ease;" onmouseover="this.style.color='#059669'; this.style.textDecoration='underline';" onmouseout="this.style.color='#10b981'; this.style.textDecoration='none';">{{formData.phone}}</a>
+        </span>
+    </div>
+    
+    {{#if formData.services}}
+    <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #a7f3d0;">
+        <div style="font-weight: 700; color: #065f46; margin-bottom: 15px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">🛠️</span> Services Requested:
+        </div>
+        <div class="services-list">
+            <ul>
+                {{#each formData.services}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    {{/if}}
+    
+    <div style="margin-bottom: 0;">
+        <div style="font-weight: 700; color: #065f46; margin-bottom: 15px; display: flex; align-items: center; font-size: 16px;">
+            <span style="margin-right: 10px; font-size: 20px;">📄</span> Project Details:
+        </div>
+        <div class="message-box">{{formData.message}}</div>
+    </div>
+</div>
+
+<div class="submission-info">
+    <h3>Submission Details</h3>
+    <ul>
+        <li>Submitted on: {{currentDate}}</li>
+        <li>Source: Website Quote Form</li>
+        <li>Status: Awaiting Review</li>
+        <li>Priority: High <span style="display: inline-block; background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: 10px;">POTENTIAL CLIENT</span></li>
+    </ul>
+</div>
+
+<div class="action-required">
+    <h3>Action Required</h3>
+    <p>Please review this quote request and respond to client as soon as possible. This is a high-value opportunity that requires prompt attention.</p>
+    <div class="action-buttons">
+        <a href="mailto:{{formData.email}}" class="btn btn-primary">Reply Now</a>
+        <a href="tel:{{formData.phone}}" class="btn btn-secondary">Call Client</a>
+    </div>
+</div>
+
+<style>
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.services-list {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border-left: 6px solid #10b981;
+    padding: 25px;
+    border-radius: 16px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.services-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.services-list li {
+    padding: 12px 0;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.05) 100%);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    padding-left: 45px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.services-list li:hover {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+    transform: translateX(5px);
+}
+
+.services-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 15px;
+    color: #10b981;
+    font-weight: bold;
+    font-size: 18px;
+    background: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.message-box {
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    border-left: 6px solid #10b981;
+    padding: 25px;
+    border-radius: 16px;
+    margin-top: 15px;
+    font-style: italic;
+    color: #374151;
+    font-size: 16px;
+    line-height: 1.8;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.message-box::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 48px;
+    color: #10b981;
+    opacity: 0.3;
+    font-family: Georgia, serif;
+}
+
+.message-box::after {
+    content: '"';
+    position: absolute;
+    bottom: -20px;
+    right: 15px;
+    font-size: 48px;
+    color: #10b981;
+    opacity: 0.3;
+    font-family: Georgia, serif;
+}
+
+.submission-info {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+}
+
+.submission-info h3 {
+    color: #0369a1;
+    margin-bottom: 15px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.submission-info h3::before {
+    content: '📋';
+    margin-right: 8px;
+}
+
+.submission-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.submission-info li {
+    padding: 8px 0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+}
+
+.submission-info li::before {
+    content: '•';
+    color: #0ea5e9;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.action-required {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 3px solid #fcd34d;
+    border-radius: 20px;
+    padding: 35px;
+    margin: 30px 0;
+    box-shadow: 0 15px 50px rgba(251, 191, 36, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-required::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.action-required h3 {
+    color: #92400e;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.action-required h3::before {
+    content: '⚡';
+    margin-right: 12px;
+    font-size: 28px;
+}
+
+.action-required p {
+    color: #78350f;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: white;
+    color: #10b981;
+    border: 2px solid #10b981;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.btn-secondary:hover {
+    background: #10b981;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+</style>
