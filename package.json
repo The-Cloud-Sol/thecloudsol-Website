@@ -1,36 +1,16 @@
 {
-  "name": "thecloudsol-website",
+  "name": "vite_react_shadcn_ts",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
-  "description": "Professional cloud solutions website for The Cloud Sol",
-  "homepage": "https://thecloudsol.com",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "build:dev": "tsc && vite build --mode development",
-    "build:analyze": "tsc && vite build --mode analyze",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
     "preview": "vite preview",
-    "preview:dist": "vite preview --dist",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix",
-    "type-check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "server": "tsx server.ts",
-    "server:dev": "tsx watch server.ts",
-    "server:prod": "NODE_ENV=production tsx server.ts",
-    "start": "npm run server:prod",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "pre-build": "npm run lint && npm run type-check",
-    "postbuild": "npm run build:sitemap",
-    "build:sitemap": "node scripts/generate-sitemap.js",
-    "deploy:staging": "npm run build && npm run deploy:staging:upload",
-    "deploy:production": "npm run build && npm run deploy:prod:upload"
+    "server:dev": "tsx watch server.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -90,7 +70,6 @@
     "react-console-emulator": "^5.0.2",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
-    "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.61.1",
     "react-resizable-panels": "^2.1.9",
     "react-router-dom": "^6.30.1",
@@ -116,59 +95,12 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
     "postcss": "^8.5.6",
-    "prettier": "^3.3.3",
-    "rollup-plugin-visualizer": "^5.12.0",
     "tailwindcss": "^3.4.17",
     "TheCloudSol-tagger": "^1.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
-    "vite": "^7.2.7",
-    "vite-plugin-pwa": "^0.20.5",
-    "vitest": "^2.1.4",
-    "workbox-window": "^7.1.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
-  },
-  "keywords": [
-    "cloud-solutions",
-    "azure",
-    "aws",
-    "google-workspace",
-    "microsoft-365",
-    "react",
-    "typescript",
-    "tailwindcss",
-    "vite"
-  ],
-  "author": {
-    "name": "The Cloud Sol",
-    "email": "info@thecloudsol.com",
-    "url": "https://thecloudsol.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/thecloudsol/website.git"
+    "vite": "^7.2.7"
   }
 }
