@@ -42,37 +42,35 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // For Vercel deployment, use a fallback approach
-      // Since there's no backend, show a success message with email client fallback
-      const emailSubject = encodeURIComponent(`Contact Message from ${formData.name}`);
-      const emailBody = encodeURIComponent(`
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Company: ${formData.company}
-
-Message:
-${formData.message}
-      `);
-      
-      const mailtoLink = `mailto:tech.thecloudsol@gmail.com?subject=${emailSubject}&body=${emailBody}`;
-      
-      // Open email client
-      window.open(mailtoLink, '_blank');
-      
-      toast({
-        title: "Opening Email Client",
-        description: "Please send your message through the email client that opened.",
+      // Use Vercel serverless function
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
       
-      // Reset form
-      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      const result = await response.json();
       
+      if (response.ok && result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      } else {
+        toast({
+          title: "Error",
+          description: result.message || "Failed to send message. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error('Contact submission error:', error);
       toast({
-        title: "Error",
-        description: "Failed to open email client. Please try again.",
+        title: "Network Error",
+        description: "Unable to connect to server. Please try again later.",
         variant: "destructive",
       });
     } finally {
