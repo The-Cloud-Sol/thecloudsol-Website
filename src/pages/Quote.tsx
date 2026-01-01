@@ -52,44 +52,49 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/quote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          selectedServices,
-        }),
-      });
+      // For Vercel deployment, use a fallback approach
+      // Since there's no backend, show a success message with email client fallback
+      const emailSubject = encodeURIComponent(`Quote Request from ${formData.name}`);
+      const emailBody = encodeURIComponent(`
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Company: ${formData.company}
+Designation: ${formData.designation}
 
-      const result = await response.json();
+Services Needed:
+${selectedServices.join(', ')}
 
-      if (result.success) {
-        toast({
-          title: "Quote Request Received!",
-          description: "Our architects will review your brief and respond with a tailored plan within 24 hours.",
-        });
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          designation: "",
-          details: "",
-        });
-        setSelectedServices([]);
-      } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to submit quote request. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
+Project Details:
+${formData.details}
+      `);
+      
+      const mailtoLink = `mailto:tech.thecloudsol@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+      
+      // Open email client
+      window.open(mailtoLink, '_blank');
+      
       toast({
-        title: "Network Error",
-        description: "Unable to connect to server. Please try again later.",
+        title: "Opening Email Client",
+        description: "Please send your quote request through the email client that opened.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        designation: "",
+        details: "",
+      });
+      setSelectedServices([]);
+      
+    } catch (error) {
+      console.error('Quote submission error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to open email client. Please try again.",
         variant: "destructive",
       });
     } finally {

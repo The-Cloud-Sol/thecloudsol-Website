@@ -15,40 +15,40 @@ const ComponentLoadingFallback = () => (
   </div>
 );
 
-// Client logos
+// Client logos - use public paths for Vercel deployment
 const clientLogos = [
-  "/src/assets/Clients Logo/0000122_seca-logo-en.png",
-  "/src/assets/Clients Logo/Final Wht Tr (1).png",
-  "/src/assets/Clients Logo/Integra Engineering.png",
-  "/src/assets/Clients Logo/Mahi System Pvt Ltd.png",
-  "/src/assets/Clients Logo/decon-Logo.png",
-  "/src/assets/Clients Logo/logo EP.png",
-  "/src/assets/Clients Logo/logo-bulwark-systems.png",
-  "/src/assets/Clients Logo/logo.png",
-  "/src/assets/Clients Logo/logo1.png",
-  "/src/assets/Clients Logo/newl.png",
-  "/src/assets/Clients Logo/seastarr_international_logo.jpg",
-  "/src/assets/Clients Logo/shrihari.png",
-  "/src/assets/Clients Logo/tmpqdn9_n_2.webp"
+  "/assets/Clients Logo/0000122_seca-logo-en.png",
+  "/assets/Clients Logo/Final Wht Tr (1).png",
+  "/assets/Clients Logo/Integra Engineering.png",
+  "/assets/Clients Logo/Mahi System Pvt Ltd.png",
+  "/assets/Clients Logo/decon-Logo.png",
+  "/assets/Clients Logo/logo EP.png",
+  "/assets/Clients Logo/logo-bulwark-systems.png",
+  "/assets/Clients Logo/logo.png",
+  "/assets/Clients Logo/logo1.png",
+  "/assets/Clients Logo/newl.png",
+  "/assets/Clients Logo/seastarr_international_logo.jpg",
+  "/assets/Clients Logo/shrihari.png",
+  "/assets/Clients Logo/tmpqdn9_n_2.webp"
 ];
 
-// Partner logos from src/assets/Partners directory
+// Partner logos - use public paths for Vercel deployment
 const partnerLogos = [
-  "/src/assets/Partners/67096ed995c868888ed718321b136a68.png",
-  "/src/assets/Partners/PikPng.com_google-logo-png_1836434.png",
-  "/src/assets/Partners/PikPng.com_run-dmc-png_5240809.png",
-  "/src/assets/Partners/PikPng.com_thundercats-logo-png_2735611.png",
-  "/src/assets/Partners/image (1).png",
-  "/src/assets/Partners/image (2).png",
-  "/src/assets/Partners/image (3).png",
-  "/src/assets/Partners/image (4).png",
-  "/src/assets/Partners/image (5).png",
-  "/src/assets/Partners/image (6).png",
-  "/src/assets/Partners/image (7).png",
-  "/src/assets/Partners/image (8).png",
-  "/src/assets/Partners/image (9).png",
-  "/src/assets/Partners/image.png",
-  "/src/assets/Partners/microsoft-sharepoint-logo-png_seeklogo-375997.png"
+  "/assets/Partners/67096ed995c868888ed718321b136a68.png",
+  "/assets/Partners/PikPng.com_google-logo-png_1836434.png",
+  "/assets/Partners/PikPng.com_run-dmc-png_5240809.png",
+  "/assets/Partners/PikPng.com_thundercats-logo-png_2735611.png",
+  "/assets/Partners/image (1).png",
+  "/assets/Partners/image (2).png",
+  "/assets/Partners/image (3).png",
+  "/assets/Partners/image (4).png",
+  "/assets/Partners/image (5).png",
+  "/assets/Partners/image (6).png",
+  "/assets/Partners/image (7).png",
+  "/assets/Partners/image (8).png",
+  "/assets/Partners/image (9).png",
+  "/assets/Partners/image.png",
+  "/assets/Partners/microsoft-sharepoint-logo-png_seeklogo-375997.png"
 ];
 
 const Index = () => {
