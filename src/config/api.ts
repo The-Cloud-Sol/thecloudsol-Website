@@ -1,9 +1,9 @@
 // API Configuration for different environments
 export const API_CONFIG = {
-  // Production: Use Web3Forms for static deployment (free, no setup needed)
+  // Production: Use Netlify functions with nodemailer
   production: {
-    contact: 'https://api.web3forms.com/submit',
-    quote: 'https://api.web3forms.com/submit',
+    contact: '/.netlify/functions/contact',
+    quote: '/.netlify/functions/quote',
   },
   // Development: Use local server with SMTP
   development: {
@@ -12,8 +12,8 @@ export const API_CONFIG = {
   },
   // Static deployment fallback
   fallback: {
-    contact: 'https://api.web3forms.com/submit',
-    quote: 'https://api.web3forms.com/submit',
+    contact: 'http://localhost:3001/api/contact',
+    quote: 'http://localhost:3001/api/quote',
   }
 };
 
@@ -24,22 +24,7 @@ export const getApiUrl = (endpoint: 'contact' | 'quote') => {
   return config[endpoint];
 };
 
-// For static deployment, check if we need fallback
-export const useEmailFallback = () => {
-  const environment = import.meta.env.MODE || 'development';
-  return environment === 'production';
-};
-
-// Web3Forms Configuration (free service)
-export const WEB3FORMS_CONFIG = {
-  access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '',
-  subject_prefix: {
-    contact: 'New Contact Message - The Cloud Sol',
-    quote: 'New Quote Request - The Cloud Sol',
-  }
-};
-
-// SMTP Configuration (for development)
+// SMTP Configuration (for development and production)
 export const SMTP_CONFIG = {
   host: import.meta.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(import.meta.env.SMTP_PORT || '587'),

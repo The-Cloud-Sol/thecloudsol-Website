@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, Send, Shield, Building2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { getApiUrl, useEmailFallback, WEB3FORMS_CONFIG } from '@/config/api';
+import { getApiUrl } from '@/config/api';
 
 const contactHighlights = [
   {
@@ -43,77 +43,31 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Use API endpoint for all environments
+      // Use your nodemailer SMTP backend
       const apiUrl = getApiUrl('contact');
-      const isWeb3Forms = apiUrl.includes('web3forms.com');
       
-      let response;
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       
-      if (isWeb3Forms) {
-        // Web3Forms submission with correct format
-        const web3FormData = {
-          access_key: WEB3FORMS_CONFIG.access_key,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company,
-          message: formData.message,
-          subject: WEB3FORMS_CONFIG.subject_prefix.contact,
-          from_name: formData.name,
-          reply_to: formData.email,
-        };
-        
-        console.log('Web3Forms submission data:', web3FormData);
-        
-        response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(web3FormData),
+      const result = await response.json();
+      
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
         });
-        
-        // Web3Forms response handling
-        const result = await response.json();
-        console.log('Web3Forms response:', result);
-        
-        if (response.ok && result.success) {
-          toast({
-            title: "Message Sent!",
-            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-          });
-          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-        } else {
-          toast({
-            title: "Error",
-            description: result.message || "Failed to send message. Please try again.",
-          });
-        }
+        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       } else {
-        // Your SMTP backend
-        response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(formData),
+        toast({
+          title: "Error",
+          description: result.message || "Failed to send message. Please try again.",
         });
-        
-        const result = await response.json();
-        if (result.success) {
-          toast({
-            title: "Message Sent!",
-            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-          });
-          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-        } else {
-          toast({
-            title: "Error",
-            description: result.message || "Failed to send message. Please try again.",
-          });
-        }
       }
     } catch (error) {
       console.error('Contact submission error:', error);

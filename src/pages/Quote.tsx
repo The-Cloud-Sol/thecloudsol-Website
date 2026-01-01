@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Phone, Mail, MapPin, Building2, Users, Clock, CheckCircle, ArrowRight, FileText, Shield, Workflow, Layers3, Rocket } from 'lucide-react';
 import { toast } from 'sonner';
-import { getApiUrl, useEmailFallback, WEB3FORMS_CONFIG } from '@/config/api';
+import { getApiUrl } from '@/config/api';
 import {
   Select,
   SelectContent,
@@ -58,100 +58,43 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      // Use API endpoint for all environments
+      // Use your nodemailer SMTP backend
       const apiUrl = getApiUrl('quote');
-      const isWeb3Forms = apiUrl.includes('web3forms.com');
       
-      let response;
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          selectedServices,
+        }),
+      });
       
-      if (isWeb3Forms) {
-        // Web3Forms submission with correct format
-        const web3FormData = {
-          access_key: WEB3FORMS_CONFIG.access_key,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company,
-          designation: formData.designation,
-          message: formData.details, // Web3Forms expects 'message' field
-          services_needed: selectedServices.join(', '),
-          subject: WEB3FORMS_CONFIG.subject_prefix.quote,
-          from_name: formData.name,
-          reply_to: formData.email,
-        };
-        
-        console.log('Web3Forms submission data:', web3FormData);
-        
-        response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(web3FormData),
+      const result = await response.json();
+      
+      if (result.success) {
+        toast({
+          title: "Quote Request Sent!",
+          description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
         });
-        
-        // Web3Forms response handling
-        const result = await response.json();
-        console.log('Web3Forms response:', result);
-        
-        if (response.ok && result.success) {
-          toast({
-            title: "Quote Request Sent!",
-            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
-          });
-          // Reset form
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            company: "",
-            designation: "",
-            details: "",
-          });
-          setSelectedServices([]);
-        } else {
-          toast({
-            title: "Error",
-            description: result.message || "Failed to send quote request. Please try again.",
-          });
-        }
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          designation: "",
+          details: "",
+        });
+        setSelectedServices([]);
       } else {
-        // Your SMTP backend
-        response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            ...formData,
-            selectedServices,
-          }),
+        toast({
+          title: "Error",
+          description: result.message || "Failed to send quote request. Please try again.",
         });
-        
-        const result = await response.json();
-        if (result.success) {
-          toast({
-            title: "Quote Request Sent!",
-            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
-          });
-          // Reset form
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            company: "",
-            designation: "",
-            details: "",
-          });
-          setSelectedServices([]);
-        } else {
-          toast({
-            title: "Error",
-            description: result.message || "Failed to send quote request. Please try again.",
-          });
-        }
       }
     } catch (error) {
       console.error('Quote submission error:', error);
