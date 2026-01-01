@@ -58,7 +58,7 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      // Use your nodemailer SMTP backend
+      // Use Netlify function for production, local server for development
       const apiUrl = getApiUrl('quote');
       
       const response = await fetch(apiUrl, {
@@ -73,9 +73,15 @@ export default function Quote() {
         }),
       });
       
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response');
+      }
+      
       const result = await response.json();
       
-      if (result.success) {
+      if (response.ok && result.success) {
         toast({
           title: "Quote Request Sent!",
           description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
@@ -93,7 +99,7 @@ export default function Quote() {
       } else {
         toast({
           title: "Error",
-          description: result.message || "Failed to send quote request. Please try again.",
+          description: result.message || result.error || "Failed to send quote request. Please try again.",
         });
       }
     } catch (error) {

@@ -12,8 +12,8 @@ export const API_CONFIG = {
   },
   // Static deployment fallback
   fallback: {
-    contact: 'http://localhost:3001/api/contact',
-    quote: 'http://localhost:3001/api/quote',
+    contact: '/.netlify/functions/contact',
+    quote: '/.netlify/functions/quote',
   }
 };
 

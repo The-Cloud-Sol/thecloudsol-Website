@@ -1,6 +1,7 @@
 [build]
   publish = "dist"
   command = "npm run build"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "22"
@@ -39,21 +40,18 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    # Explicitly mark as static site
-    X-Netlify-CDN-Cache-Control = "public, max-age=0, must-revalidate"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
 # Asset caching for Vite build output
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.css"

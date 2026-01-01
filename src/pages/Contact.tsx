@@ -43,7 +43,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Use your nodemailer SMTP backend
+      // Use Netlify function for production, local server for development
       const apiUrl = getApiUrl('contact');
       
       const response = await fetch(apiUrl, {
@@ -55,9 +55,15 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
       
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response');
+      }
+      
       const result = await response.json();
       
-      if (result.success) {
+      if (response.ok && result.success) {
         toast({
           title: "Message Sent!",
           description: "Thank you for contacting us. We'll get back to you within 24 hours.",
@@ -66,7 +72,7 @@ export default function Contact() {
       } else {
         toast({
           title: "Error",
-          description: result.message || "Failed to send message. Please try again.",
+          description: result.message || result.error || "Failed to send message. Please try again.",
         });
       }
     } catch (error) {
