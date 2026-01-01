@@ -1,17 +1,11 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Phone, Mail, MapPin, Building2, Users, Clock, CheckCircle, ArrowRight, FileText, Shield, Workflow, Layers3, Rocket } from 'lucide-react';
-import { toast } from 'sonner';
-import { getApiUrl } from '@/config/api';
+import { useState } from "react";
+import DarkVeil from "@/components/home/DarkVeil";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -19,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import DarkVeil from "@/components/home/DarkVeil";
+import { FileText, CheckCircle, Shield, Workflow, Layers3, Rocket } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const services = [
@@ -58,35 +52,24 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      // Use Netlify function for production, local server for development
-      const apiUrl = getApiUrl('quote');
-      
-      const response = await fetch(apiUrl, {
+      const response = await fetch('http://localhost:3001/api/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
           selectedServices,
         }),
       });
-      
-      // Check if response is JSON before parsing
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Server returned non-JSON response');
-      }
-      
+
       const result = await response.json();
-      
-      if (response.ok && result.success) {
+
+      if (result.success) {
         toast({
-          title: "Quote Request Sent!",
-          description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
+          title: "Quote Request Received!",
+          description: "Our architects will review your brief and respond with a tailored plan within 24 hours.",
         });
-        // Reset form
         setFormData({
           name: "",
           email: "",
@@ -99,14 +82,15 @@ export default function Quote() {
       } else {
         toast({
           title: "Error",
-          description: result.message || result.error || "Failed to send quote request. Please try again.",
+          description: result.error || "Failed to submit quote request. Please try again.",
+          variant: "destructive",
         });
       }
     } catch (error) {
-      console.error('Quote submission error:', error);
       toast({
-        title: "Error",
-        description: "Failed to send quote request. Please try again later.",
+        title: "Network Error",
+        description: "Unable to connect to server. Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);

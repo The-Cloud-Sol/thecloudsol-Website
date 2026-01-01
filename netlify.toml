@@ -1,7 +1,6 @@
 [build]
   publish = "dist"
   command = "npm run build"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "22"
@@ -26,17 +25,7 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA routing for React Router (exclude functions)
-[[redirects]]
-  from = "/.netlify/*"
-  to = "/.netlify/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/assets/*"
-  to = "/assets/:splat"
-  status = 200
-
+# SPA routing for React Router
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -50,18 +39,21 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    # Explicitly mark as static site
+    X-Netlify-CDN-Cache-Control = "public, max-age=0, must-revalidate"
 
 # Asset caching for Vite build output
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    X-Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.css"

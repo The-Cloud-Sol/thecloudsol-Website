@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, Send, Shield, Building2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { getApiUrl } from '@/config/api';
 
 const contactHighlights = [
   {
@@ -43,64 +42,34 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // First test if Netlify functions are working
-      try {
-        const testResponse = await fetch('/.netlify/functions/hello');
-        const testResult = await testResponse.json();
-        console.log('Netlify Functions test result:', testResult);
-        
-        if (!testResponse.ok) {
-          throw new Error('Netlify Functions not available');
-        }
-      } catch (testError) {
-        console.log('Netlify Functions test failed:', testError);
-        toast({
-          title: "Service Unavailable",
-          description: "Email service is currently unavailable. Please try again later.",
-        });
-        return;
-      }
-
-      // Use simple contact function for testing
-      const apiUrl = '/.netlify/functions/contact-simple';
-      
-      const response = await fetch(apiUrl, {
+      const response = await fetch('http://localhost:3001/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      
-      // Check if response is JSON before parsing
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        console.error('Non-JSON response:', text);
-        throw new Error('Server returned non-JSON response');
-      }
-      
+
       const result = await response.json();
-      console.log('Contact form response:', result);
-      
-      if (response.ok && result.success) {
+
+      if (result.success) {
         toast({
           title: "Message Sent!",
-          description: result.message || "Thank you for contacting us. We'll get back to you within 24 hours.",
+          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
         });
         setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       } else {
         toast({
           title: "Error",
-          description: result.message || result.error || "Failed to send message. Please try again.",
+          description: result.error || "Failed to send message. Please try again.",
+          variant: "destructive",
         });
       }
     } catch (error) {
-      console.error('Contact submission error:', error);
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again later.",
+        title: "Network Error",
+        description: "Unable to connect to server. Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
