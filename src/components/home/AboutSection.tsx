@@ -173,7 +173,7 @@ export function AboutSection() {
                 <div 
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
-                    backgroundImage: 'url(/src/assets/scott-rodgerson-PSpf_XgOM5w-unsplash.jpg)',
+                    backgroundImage: 'url(/assets/scott-rodgerson-PSpf_XgOM5w-unsplash.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundAttachment: 'fixed',

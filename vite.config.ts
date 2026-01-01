@@ -64,47 +64,25 @@ export default defineConfig(({ mode }) => ({
             '@radix-ui/react-tooltip',
           ],
           
-          // Animation and motion libraries
-          'animation-vendor': ['framer-motion', 'gsap'],
-          
-          // Chart and data visualization
-          'chart-vendor': ['recharts', 'three', 'ogl', 'postprocessing'],
-          
-          // Form and validation libraries
-          'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
-          
-          // Utility libraries
-          'utility-vendor': [
-            'clsx',
-            'tailwind-merge',
-            'class-variance-authority',
-            'cmdk',
-            'date-fns',
-            'embla-carousel-react',
-            'react-resizable-panels',
-            'input-otp',
-            'vaul',
-            'sonner',
-          ],
-          
-          // Icons
-          'icon-vendor': ['lucide-react'],
-          
-          // Query and state management
-          'query-vendor': ['@tanstack/react-query'],
-          
-          // Other large dependencies
-          'misc-vendor': [
-            'react-day-picker',
-            'react-console-emulator',
-          ],
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'logo.png') {
-            return 'assets/[name].[hash][extname]';
+          // Add hash to asset names for cache busting
+          const name = assetInfo.name || 'asset';
+          const info = name.split('.');
+          const ext = info[info.length - 1];
+          if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i.test(name)) {
+            return `assets/media/[name]-[hash][extname]`;
           }
-          return 'assets/[name]-[hash][extname]';
+          if (/\.(png|jpe?g|gif|svg|webp|avif)(\?.*)?$/i.test(name)) {
+            return `assets/images/[name]-[hash][extname]`;
+          }
+          if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(name)) {
+            return `assets/fonts/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
         },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
       },
     },
     chunkSizeWarningLimit: 500, // Back to standard limit - optimization successful
