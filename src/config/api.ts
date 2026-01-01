@@ -32,7 +32,7 @@ export const useEmailFallback = () => {
 
 // Web3Forms Configuration (free service)
 export const WEB3FORMS_CONFIG = {
-  access_key: 'YOUR_WEB3FORMS_ACCESS_KEY', // Get this from web3forms.com
+  access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '',
   subject_prefix: {
     contact: 'New Contact Message - The Cloud Sol',
     quote: 'New Quote Request - The Cloud Sol',

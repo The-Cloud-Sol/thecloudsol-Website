@@ -65,15 +65,22 @@ export default function Quote() {
       let response;
       
       if (isWeb3Forms) {
-        // Web3Forms submission
-        const formDataWithAccess = {
-          ...formData,
+        // Web3Forms submission with correct format
+        const web3FormData = {
           access_key: WEB3FORMS_CONFIG.access_key,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          designation: formData.designation,
+          message: formData.details, // Web3Forms expects 'message' field
+          services_needed: selectedServices.join(', '),
           subject: WEB3FORMS_CONFIG.subject_prefix.quote,
           from_name: formData.name,
           reply_to: formData.email,
-          services_needed: selectedServices.join(', '),
         };
+        
+        console.log('Web3Forms submission data:', web3FormData);
         
         response = await fetch(apiUrl, {
           method: 'POST',
@@ -81,37 +88,32 @@ export default function Quote() {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify(formDataWithAccess),
+          body: JSON.stringify(web3FormData),
         });
         
         // Web3Forms response handling
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success) {
-            toast({
-              title: "Quote Request Sent!",
-              description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
-            });
-            // Reset form
-            setFormData({
-              name: "",
-              email: "",
-              phone: "",
-              company: "",
-              designation: "",
-              details: "",
-            });
-            setSelectedServices([]);
-          } else {
-            toast({
-              title: "Error",
-              description: result.message || "Failed to send quote request. Please try again.",
-            });
-          }
+        const result = await response.json();
+        console.log('Web3Forms response:', result);
+        
+        if (response.ok && result.success) {
+          toast({
+            title: "Quote Request Sent!",
+            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
+          });
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            designation: "",
+            details: "",
+          });
+          setSelectedServices([]);
         } else {
           toast({
             title: "Error",
-            description: "Failed to send quote request. Please try again.",
+            description: result.message || "Failed to send quote request. Please try again.",
           });
         }
       } else {

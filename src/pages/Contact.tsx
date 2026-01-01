@@ -50,14 +50,20 @@ export default function Contact() {
       let response;
       
       if (isWeb3Forms) {
-        // Web3Forms submission
-        const formDataWithAccess = {
-          ...formData,
+        // Web3Forms submission with correct format
+        const web3FormData = {
           access_key: WEB3FORMS_CONFIG.access_key,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
           subject: WEB3FORMS_CONFIG.subject_prefix.contact,
           from_name: formData.name,
           reply_to: formData.email,
         };
+        
+        console.log('Web3Forms submission data:', web3FormData);
         
         response = await fetch(apiUrl, {
           method: 'POST',
@@ -65,28 +71,23 @@ export default function Contact() {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify(formDataWithAccess),
+          body: JSON.stringify(web3FormData),
         });
         
         // Web3Forms response handling
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success) {
-            toast({
-              title: "Message Sent!",
-              description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-            });
-            setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-          } else {
-            toast({
-              title: "Error",
-              description: result.message || "Failed to send message. Please try again.",
-            });
-          }
+        const result = await response.json();
+        console.log('Web3Forms response:', result);
+        
+        if (response.ok && result.success) {
+          toast({
+            title: "Message Sent!",
+            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+          });
+          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
         } else {
           toast({
             title: "Error",
-            description: "Failed to send message. Please try again.",
+            description: result.message || "Failed to send message. Please try again.",
           });
         }
       } else {
