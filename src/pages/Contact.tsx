@@ -45,7 +45,10 @@ export default function Contact() {
     try {
       // First test if Netlify functions are working
       try {
-        const testResponse = await fetch('/.netlify/functions/test');
+        const testResponse = await fetch('/.netlify/functions/hello');
+        const testResult = await testResponse.json();
+        console.log('Netlify Functions test result:', testResult);
+        
         if (!testResponse.ok) {
           throw new Error('Netlify Functions not available');
         }
@@ -58,8 +61,8 @@ export default function Contact() {
         return;
       }
 
-      // Use Netlify function for production, local server for development
-      const apiUrl = getApiUrl('contact');
+      // Use simple contact function for testing
+      const apiUrl = '/.netlify/functions/contact-simple';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -79,11 +82,12 @@ export default function Contact() {
       }
       
       const result = await response.json();
+      console.log('Contact form response:', result);
       
       if (response.ok && result.success) {
         toast({
           title: "Message Sent!",
-          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+          description: result.message || "Thank you for contacting us. We'll get back to you within 24 hours.",
         });
         setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       } else {

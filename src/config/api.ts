@@ -2,21 +2,21 @@
 export const API_CONFIG = {
   // Production: Use Netlify functions with nodemailer
   production: {
-    contact: '/.netlify/functions/contact',
+    contact: '/.netlify/functions/contact-simple',
     quote: '/.netlify/functions/quote',
-    test: '/.netlify/functions/test',
+    test: '/.netlify/functions/hello',
   },
   // Development: Use local server with SMTP
   development: {
     contact: 'http://localhost:3001/api/contact',
     quote: 'http://localhost:3001/api/quote',
-    test: '/.netlify/functions/test',
+    test: '/.netlify/functions/hello',
   },
   // Static deployment fallback
   fallback: {
-    contact: '/.netlify/functions/contact',
+    contact: '/.netlify/functions/contact-simple',
     quote: '/.netlify/functions/quote',
-    test: '/.netlify/functions/test',
+    test: '/.netlify/functions/hello',
   }
 };
 
