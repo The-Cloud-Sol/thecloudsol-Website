@@ -1,19 +1,19 @@
 // API Configuration for different environments
 export const API_CONFIG = {
-  // Production: Use Netlify functions or external API
+  // Production: Use Formspree for static deployment
   production: {
-    contact: '/.netlify/functions/contact',
-    quote: '/.netlify/functions/quote',
+    contact: 'https://formspree.io/f/xqkpvjlp', // Replace with your Formspree ID
+    quote: 'https://formspree.io/f/mgeqzvwb',   // Replace with your Formspree ID
   },
   // Development: Use local server with SMTP
   development: {
     contact: 'http://localhost:3001/api/contact',
     quote: 'http://localhost:3001/api/quote',
   },
-  // Static deployment: Use formspree or similar service
+  // Static deployment fallback
   fallback: {
-    contact: 'https://formspree.io/f/xyz123', // Replace with your Formspree ID
-    quote: 'https://formspree.io/f/abc456',   // Replace with your Formspree ID
+    contact: 'https://formspree.io/f/xqkpvjlp', // Replace with your Formspree ID
+    quote: 'https://formspree.io/f/mgeqzvwb',   // Replace with your Formspree ID
   }
 };
 
@@ -27,10 +27,10 @@ export const getApiUrl = (endpoint: 'contact' | 'quote') => {
 // For static deployment, check if we need fallback
 export const useEmailFallback = () => {
   const environment = import.meta.env.MODE || 'development';
-  return environment === 'production' && !import.meta.env.VITE_HAS_BACKEND;
+  return environment === 'production';
 };
 
-// SMTP Configuration (for reference)
+// SMTP Configuration (for development)
 export const SMTP_CONFIG = {
   host: import.meta.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(import.meta.env.SMTP_PORT || '587'),

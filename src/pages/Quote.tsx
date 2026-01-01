@@ -58,12 +58,15 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      // Use API endpoint for all environments (your SMTP backend)
+      // Use API endpoint for all environments
       const apiUrl = getApiUrl('quote');
+      const isFormspree = apiUrl.includes('formspree.io');
+      
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': isFormspree ? 'application/json' : 'application/json',
+          'Accept': isFormspree ? 'application/json' : 'application/json',
         },
         body: JSON.stringify({
           ...formData,
@@ -71,28 +74,53 @@ export default function Quote() {
         }),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        toast({
-          title: "Quote Request Sent!",
-          description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
-        });
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          designation: "",
-          details: "",
-        });
-        setSelectedServices([]);
+      if (isFormspree) {
+        // Formspree returns different response format
+        if (response.ok) {
+          toast({
+            title: "Quote Request Sent!",
+            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
+          });
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            designation: "",
+            details: "",
+          });
+          setSelectedServices([]);
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to send quote request. Please try again.",
+          });
+        }
       } else {
-        toast({
-          title: "Error",
-          description: result.message || "Failed to send quote request. Please try again.",
-        });
+        // Your SMTP backend
+        const result = await response.json();
+        if (result.success) {
+          toast({
+            title: "Quote Request Sent!",
+            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
+          });
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            designation: "",
+            details: "",
+          });
+          setSelectedServices([]);
+        } else {
+          toast({
+            title: "Error",
+            description: result.message || "Failed to send quote request. Please try again.",
+          });
+        }
       }
     } catch (error) {
       console.error('Quote submission error:', error);

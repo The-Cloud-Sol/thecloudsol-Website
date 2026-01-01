@@ -43,29 +43,48 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Use API endpoint for all environments (your SMTP backend)
+      // Use API endpoint for all environments
       const apiUrl = getApiUrl('contact');
+      const isFormspree = apiUrl.includes('formspree.io');
+      
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': isFormspree ? 'application/json' : 'application/json',
+          'Accept': isFormspree ? 'application/json' : 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        toast({
-          title: "Message Sent!",
-          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-        });
-        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      if (isFormspree) {
+        // Formspree returns different response format
+        if (response.ok) {
+          toast({
+            title: "Message Sent!",
+            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+          });
+          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to send message. Please try again.",
+          });
+        }
       } else {
-        toast({
-          title: "Error",
-          description: result.message || "Failed to send message. Please try again.",
-        });
+        // Your SMTP backend
+        const result = await response.json();
+        if (result.success) {
+          toast({
+            title: "Message Sent!",
+            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+          });
+          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+        } else {
+          toast({
+            title: "Error",
+            description: result.message || "Failed to send message. Please try again.",
+          });
+        }
       }
     } catch (error) {
       console.error('Contact submission error:', error);
