@@ -43,6 +43,21 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
+      // First test if Netlify functions are working
+      try {
+        const testResponse = await fetch('/.netlify/functions/test');
+        if (!testResponse.ok) {
+          throw new Error('Netlify Functions not available');
+        }
+      } catch (testError) {
+        console.log('Netlify Functions test failed:', testError);
+        toast({
+          title: "Service Unavailable",
+          description: "Email service is currently unavailable. Please try again later.",
+        });
+        return;
+      }
+
       // Use Netlify function for production, local server for development
       const apiUrl = getApiUrl('contact');
       
@@ -58,6 +73,8 @@ export default function Contact() {
       // Check if response is JSON before parsing
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
         throw new Error('Server returned non-JSON response');
       }
       

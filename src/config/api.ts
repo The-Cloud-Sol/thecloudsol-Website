@@ -4,20 +4,23 @@ export const API_CONFIG = {
   production: {
     contact: '/.netlify/functions/contact',
     quote: '/.netlify/functions/quote',
+    test: '/.netlify/functions/test',
   },
   // Development: Use local server with SMTP
   development: {
     contact: 'http://localhost:3001/api/contact',
     quote: 'http://localhost:3001/api/quote',
+    test: '/.netlify/functions/test',
   },
   // Static deployment fallback
   fallback: {
     contact: '/.netlify/functions/contact',
     quote: '/.netlify/functions/quote',
+    test: '/.netlify/functions/test',
   }
 };
 
-export const getApiUrl = (endpoint: 'contact' | 'quote') => {
+export const getApiUrl = (endpoint: 'contact' | 'quote' | 'test') => {
   const environment = import.meta.env.MODE || 'development';
   const config = API_CONFIG[environment as keyof typeof API_CONFIG] || API_CONFIG.fallback;
   
