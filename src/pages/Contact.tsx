@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, Send, Shield, Building2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { getApiUrl, useEmailFallback } from '@/config/api';
+import { getApiUrl, useEmailFallback, WEB3FORMS_CONFIG } from '@/config/api';
 
 const contactHighlights = [
   {
@@ -45,25 +45,44 @@ export default function Contact() {
     try {
       // Use API endpoint for all environments
       const apiUrl = getApiUrl('contact');
-      const isFormspree = apiUrl.includes('formspree.io');
+      const isWeb3Forms = apiUrl.includes('web3forms.com');
       
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': isFormspree ? 'application/json' : 'application/json',
-          'Accept': isFormspree ? 'application/json' : 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (isFormspree) {
-        // Formspree returns different response format
+      let response;
+      
+      if (isWeb3Forms) {
+        // Web3Forms submission
+        const formDataWithAccess = {
+          ...formData,
+          access_key: WEB3FORMS_CONFIG.access_key,
+          subject: WEB3FORMS_CONFIG.subject_prefix.contact,
+          from_name: formData.name,
+          reply_to: formData.email,
+        };
+        
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(formDataWithAccess),
+        });
+        
+        // Web3Forms response handling
         if (response.ok) {
-          toast({
-            title: "Message Sent!",
-            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-          });
-          setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+          const result = await response.json();
+          if (result.success) {
+            toast({
+              title: "Message Sent!",
+              description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+            });
+            setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+          } else {
+            toast({
+              title: "Error",
+              description: result.message || "Failed to send message. Please try again.",
+            });
+          }
         } else {
           toast({
             title: "Error",
@@ -72,6 +91,15 @@ export default function Contact() {
         }
       } else {
         // Your SMTP backend
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        
         const result = await response.json();
         if (result.success) {
           toast({

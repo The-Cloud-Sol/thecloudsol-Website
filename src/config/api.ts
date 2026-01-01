@@ -1,9 +1,9 @@
 // API Configuration for different environments
 export const API_CONFIG = {
-  // Production: Use Formspree for static deployment
+  // Production: Use Web3Forms for static deployment (free, no setup needed)
   production: {
-    contact: 'https://formspree.io/f/xqkpvjlp', // Replace with your Formspree ID
-    quote: 'https://formspree.io/f/mgeqzvwb',   // Replace with your Formspree ID
+    contact: 'https://api.web3forms.com/submit',
+    quote: 'https://api.web3forms.com/submit',
   },
   // Development: Use local server with SMTP
   development: {
@@ -12,8 +12,8 @@ export const API_CONFIG = {
   },
   // Static deployment fallback
   fallback: {
-    contact: 'https://formspree.io/f/xqkpvjlp', // Replace with your Formspree ID
-    quote: 'https://formspree.io/f/mgeqzvwb',   // Replace with your Formspree ID
+    contact: 'https://api.web3forms.com/submit',
+    quote: 'https://api.web3forms.com/submit',
   }
 };
 
@@ -28,6 +28,15 @@ export const getApiUrl = (endpoint: 'contact' | 'quote') => {
 export const useEmailFallback = () => {
   const environment = import.meta.env.MODE || 'development';
   return environment === 'production';
+};
+
+// Web3Forms Configuration (free service)
+export const WEB3FORMS_CONFIG = {
+  access_key: 'YOUR_WEB3FORMS_ACCESS_KEY', // Get this from web3forms.com
+  subject_prefix: {
+    contact: 'New Contact Message - The Cloud Sol',
+    quote: 'New Quote Request - The Cloud Sol',
+  }
 };
 
 // SMTP Configuration (for development)

@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Phone, Mail, MapPin, Building2, Users, Clock, CheckCircle, ArrowRight, FileText, Shield, Workflow, Layers3, Rocket } from 'lucide-react';
 import { toast } from 'sonner';
-import { getApiUrl, useEmailFallback } from '@/config/api';
+import { getApiUrl, useEmailFallback, WEB3FORMS_CONFIG } from '@/config/api';
 import {
   Select,
   SelectContent,
@@ -60,37 +60,54 @@ export default function Quote() {
     try {
       // Use API endpoint for all environments
       const apiUrl = getApiUrl('quote');
-      const isFormspree = apiUrl.includes('formspree.io');
+      const isWeb3Forms = apiUrl.includes('web3forms.com');
       
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': isFormspree ? 'application/json' : 'application/json',
-          'Accept': isFormspree ? 'application/json' : 'application/json',
-        },
-        body: JSON.stringify({
+      let response;
+      
+      if (isWeb3Forms) {
+        // Web3Forms submission
+        const formDataWithAccess = {
           ...formData,
-          selectedServices,
-        }),
-      });
-
-      if (isFormspree) {
-        // Formspree returns different response format
+          access_key: WEB3FORMS_CONFIG.access_key,
+          subject: WEB3FORMS_CONFIG.subject_prefix.quote,
+          from_name: formData.name,
+          reply_to: formData.email,
+          services_needed: selectedServices.join(', '),
+        };
+        
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(formDataWithAccess),
+        });
+        
+        // Web3Forms response handling
         if (response.ok) {
-          toast({
-            title: "Quote Request Sent!",
-            description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
-          });
-          // Reset form
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            company: "",
-            designation: "",
-            details: "",
-          });
-          setSelectedServices([]);
+          const result = await response.json();
+          if (result.success) {
+            toast({
+              title: "Quote Request Sent!",
+              description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
+            });
+            // Reset form
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              company: "",
+              designation: "",
+              details: "",
+            });
+            setSelectedServices([]);
+          } else {
+            toast({
+              title: "Error",
+              description: result.message || "Failed to send quote request. Please try again.",
+            });
+          }
         } else {
           toast({
             title: "Error",
@@ -99,6 +116,18 @@ export default function Quote() {
         }
       } else {
         // Your SMTP backend
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            selectedServices,
+          }),
+        });
+        
         const result = await response.json();
         if (result.success) {
           toast({
