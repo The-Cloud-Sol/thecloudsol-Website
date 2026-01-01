@@ -5,10 +5,6 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
@@ -24,7 +20,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css)$)",
+      "source": "/(.*\\.(js|css)$",
       "headers": [
         {
           "key": "Cache-Control",
@@ -41,10 +37,5 @@
         }
       ]
     }
-  ],
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }
