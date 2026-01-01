@@ -8,6 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { Phone, Mail, MapPin, Building2, Users, Clock, CheckCircle, ArrowRight, FileText, Shield, Workflow, Layers3, Rocket } from 'lucide-react';
 import { toast } from 'sonner';
 import { getApiUrl, useEmailFallback } from '@/config/api';
@@ -57,36 +58,7 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      // Check if we should use email fallback for static deployment
-      if (useEmailFallback()) {
-        // Create email content for fallback
-        const emailContent = `
-          New Quote Request from ${formData.name}
-          
-          Email: ${formData.email}
-          Phone: ${formData.phone}
-          Company: ${formData.company}
-          
-          Services Interested: ${selectedServices.join(', ')}
-          
-          Message: ${formData.details}
-        `;
-        
-        // Open email client with pre-filled content
-        const subject = encodeURIComponent('Quote Request - The Cloud Sol');
-        const body = encodeURIComponent(emailContent);
-        window.location.href = `mailto:tech.thecloudsol@gmail.com?subject=${subject}&body=${body}`;
-        
-        toast({
-          title: "Quote Request Initiated",
-          description: "Your email client has opened with the quote details. Please send the email to complete your request.",
-        });
-        
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Use API endpoint for development/production with backend
+      // Use API endpoint for all environments (your SMTP backend)
       const apiUrl = getApiUrl('quote');
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -103,9 +75,10 @@ export default function Quote() {
 
       if (result.success) {
         toast({
-          title: "Quote Request Received!",
-          description: "Our architects will review your brief and respond with a tailored plan within 24 hours.",
+          title: "Quote Request Sent!",
+          description: "Thank you for your interest. We'll get back to you within 24 hours with a detailed quote.",
         });
+        // Reset form
         setFormData({
           name: "",
           email: "",
@@ -118,15 +91,14 @@ export default function Quote() {
       } else {
         toast({
           title: "Error",
-          description: result.error || "Failed to submit quote request. Please try again.",
-          variant: "destructive",
+          description: result.message || "Failed to send quote request. Please try again.",
         });
       }
     } catch (error) {
+      console.error('Quote submission error:', error);
       toast({
-        title: "Network Error",
-        description: "Unable to connect to server. Please try again later.",
-        variant: "destructive",
+        title: "Error",
+        description: "Failed to send quote request. Please try again later.",
       });
     } finally {
       setIsSubmitting(false);

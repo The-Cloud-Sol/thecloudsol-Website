@@ -5,15 +5,15 @@ export const API_CONFIG = {
     contact: '/.netlify/functions/contact',
     quote: '/.netlify/functions/quote',
   },
-  // Development: Use local server
+  // Development: Use local server with SMTP
   development: {
     contact: 'http://localhost:3001/api/contact',
     quote: 'http://localhost:3001/api/quote',
   },
-  // Fallback for static sites
+  // Static deployment: Use formspree or similar service
   fallback: {
-    contact: 'mailto:tech.thecloudsol@gmail.com',
-    quote: 'mailto:tech.thecloudsol@gmail.com',
+    contact: 'https://formspree.io/f/xyz123', // Replace with your Formspree ID
+    quote: 'https://formspree.io/f/abc456',   // Replace with your Formspree ID
   }
 };
 
@@ -24,8 +24,18 @@ export const getApiUrl = (endpoint: 'contact' | 'quote') => {
   return config[endpoint];
 };
 
-// For static deployment, we'll use email fallback
+// For static deployment, check if we need fallback
 export const useEmailFallback = () => {
   const environment = import.meta.env.MODE || 'development';
-  return environment === 'production' && !import.meta.env.VITE_API_ENABLED;
+  return environment === 'production' && !import.meta.env.VITE_HAS_BACKEND;
+};
+
+// SMTP Configuration (for reference)
+export const SMTP_CONFIG = {
+  host: import.meta.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(import.meta.env.SMTP_PORT || '587'),
+  secure: import.meta.env.SMTP_SECURE === 'true',
+  user: import.meta.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
+  pass: import.meta.env.SMTP_PASS || '',
+  from: import.meta.env.SMTP_FROM || 'The Cloud Sol <tech.thecloudsol@gmail.com>',
 };

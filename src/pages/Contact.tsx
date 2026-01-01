@@ -43,34 +43,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Check if we should use email fallback for static deployment
-      if (useEmailFallback()) {
-        // Create email content for fallback
-        const emailContent = `
-          New Contact Message from ${formData.name}
-          
-          Email: ${formData.email}
-          Phone: ${formData.phone}
-          Company: ${formData.company}
-          
-          Message: ${formData.message}
-        `;
-        
-        // Open email client with pre-filled content
-        const subject = encodeURIComponent('Contact Message - The Cloud Sol');
-        const body = encodeURIComponent(emailContent);
-        window.location.href = `mailto:tech.thecloudsol@gmail.com?subject=${subject}&body=${body}`;
-        
-        toast({
-          title: "Contact Message Initiated",
-          description: "Your email client has opened with the message details. Please send the email to complete your request.",
-        });
-        
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Use API endpoint for development/production with backend
+      // Use API endpoint for all environments (your SMTP backend)
       const apiUrl = getApiUrl('contact');
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -91,15 +64,14 @@ export default function Contact() {
       } else {
         toast({
           title: "Error",
-          description: result.error || "Failed to send message. Please try again.",
-          variant: "destructive",
+          description: result.message || "Failed to send message. Please try again.",
         });
       }
     } catch (error) {
+      console.error('Contact submission error:', error);
       toast({
-        title: "Network Error",
-        description: "Unable to connect to server. Please try again later.",
-        variant: "destructive",
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
       });
     } finally {
       setIsSubmitting(false);
