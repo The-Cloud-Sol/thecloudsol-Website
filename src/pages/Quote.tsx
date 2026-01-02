@@ -52,7 +52,7 @@ export default function Quote() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/get-quote', {
+      const response = await fetch('/api/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
