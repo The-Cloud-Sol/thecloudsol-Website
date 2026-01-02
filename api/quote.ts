@@ -38,7 +38,7 @@ const CONFIG = {
   SMTP: {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: (process.env.SMTP_SECURE === 'false'),
+    secure: false, // Always false for port 587, true only for 465
     auth: {
       user: process.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
       pass: process.env.SMTP_PASSWORD || 'oeoj hpht hrot nwnn'
@@ -360,37 +360,6 @@ Website: www.thecloudsol.com
     };
 
     if (isDev) {
-      devEmails.push(userMailOptions);
     }
-
-    // Send all emails in parallel
-    console.log('Starting quote email sending process...');
-    const [adminResults, userResult] = await Promise.all([
-      Promise.all(adminMailPromises),
-      transporter.sendMail(userMailOptions)
-    ]);
-    
-    console.log(`Admin quote emails sent to ${RECIPIENT_EMAILS.length} recipients`);
-    console.log('User quote email sent:', userResult.messageId);
-    
-    return res.status(200).json({ 
-      success: true, 
-      message: 'Quote emails sent successfully',
-      adminEmailIds: adminResults.map((r: SentMessageInfo) => r.messageId),
-      userEmailId: userResult.messageId,
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Failed to send quote request';
-    const errorStack = error instanceof Error ? error.stack : undefined;
-    
-    console.error('Error in quote form submission:', error);
-    return res.status(500).json(
-      { 
-        success: false, 
-        error: errorMessage,
-        details: process.env.NODE_ENV === 'development' ? errorStack : undefined
-      }
-    );
-  }
+  );
 }

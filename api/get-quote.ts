@@ -38,7 +38,7 @@ const CONFIG = {
   SMTP: {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: (process.env.SMTP_SECURE === 'false'),
+    secure: false, // Always false for port 587, true only for 465
     auth: {
       user: process.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
       pass: process.env.SMTP_PASSWORD || 'oeoj hpht hrot nwnn'
