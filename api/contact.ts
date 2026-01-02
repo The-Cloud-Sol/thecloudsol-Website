@@ -38,11 +38,11 @@ const CONFIG = {
     'https://thecloudsol.com/logo.png',
   SMTP: {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: process.env.SMTP_SECURE === 'true',
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: (process.env.SMTP_SECURE === 'true'),
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD
+      user: process.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
+      pass: process.env.SMTP_PASSWORD || 'oeoj hpht hrot nwnn'
     }
   }
 };
@@ -82,27 +82,6 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json(
         { success: false, error: 'Missing required fields' }
       );
-    }
-
-    // Debug: Log environment variables (without sensitive data)
-    console.log('Environment check:', {
-      NODE_ENV: process.env.NODE_ENV,
-      SMTP_HOST: process.env.SMTP_HOST,
-      SMTP_PORT: process.env.SMTP_PORT,
-      SMTP_USER: process.env.SMTP_USER ? 'SET' : 'NOT_SET',
-      SMTP_PASSWORD: process.env.SMTP_PASSWORD ? 'SET' : 'NOT_SET',
-      COMPANY_EMAIL: process.env.COMPANY_EMAIL
-    });
-
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error('Missing SMTP credentials:', {
-        SMTP_USER: !!process.env.SMTP_USER,
-        SMTP_PASSWORD: !!process.env.SMTP_PASSWORD
-      });
-      return res.status(500).json({
-        success: false,
-        error: 'Email service configuration incomplete'
-      });
     }
 
     await transporter.verify();

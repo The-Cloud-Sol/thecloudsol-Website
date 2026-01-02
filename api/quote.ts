@@ -38,10 +38,10 @@ const CONFIG = {
   SMTP: {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'false',
+    secure: (process.env.SMTP_SECURE === 'false'),
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD
+      user: process.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
+      pass: process.env.SMTP_PASSWORD || 'oeoj hpht hrot nwnn'
     },
     pool: true,
     maxConnections: 2,
@@ -86,49 +86,6 @@ export default async function handler(req: any, res: any) {
     }
 
     const { SENDER_EMAIL, RECIPIENT_EMAILS } = CONFIG;
-
-    if (isDev) {
-      console.log('Development - Preparing to send quote emails');
-      console.log('Admin emails to:', RECIPIENT_EMAILS);
-      console.log('Confirmation to:', email);
-    }
-
-    // Debug: Log environment variables (without sensitive data)
-    console.log('Environment check:', {
-      NODE_ENV: process.env.NODE_ENV,
-      SMTP_HOST: process.env.SMTP_HOST,
-      SMTP_PORT: process.env.SMTP_PORT,
-      SMTP_USER: process.env.SMTP_USER ? 'SET' : 'NOT_SET',
-      SMTP_PASSWORD: process.env.SMTP_PASSWORD ? 'SET' : 'NOT_SET',
-      COMPANY_EMAIL: process.env.COMPANY_EMAIL
-    });
-
-    // Validate SMTP configuration
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error('Missing SMTP credentials:', {
-        SMTP_USER: !!process.env.SMTP_USER,
-        SMTP_PASSWORD: !!process.env.SMTP_PASSWORD
-      });
-      return res.status(500).json({
-        success: false,
-        error: 'Email service configuration incomplete'
-      });
-    }
-
-    // Log SMTP config (without password)
-    console.log('Using SMTP server:', CONFIG.SMTP.host, 'on port', CONFIG.SMTP.port);
-    console.log('Authenticating as:', CONFIG.SMTP.auth.user);
-    
-    // Verify SMTP connection
-    try {
-      console.log('Verifying SMTP connection...');
-      await transporter.verify();
-      console.log('SMTP connection verified successfully');
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('SMTP connection error:', error);
-      throw new Error(`Failed to connect to SMTP server: ${errorMessage}`);
-    }
     
     // Create admin mail promises for all recipients
     const adminMailPromises = RECIPIENT_EMAILS.map(recipient => {
