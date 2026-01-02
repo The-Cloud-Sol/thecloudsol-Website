@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import type { SentMessageInfo } from 'nodemailer';
 
@@ -60,12 +59,6 @@ const transporter = nodemailer.createTransport({
 /* =======================
    Handler
 ======================= */
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
-
 export default async function handler(req: any, res: any) {
   // Only allow POST requests
   if (req.method !== 'POST') {
