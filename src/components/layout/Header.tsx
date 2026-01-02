@@ -88,22 +88,28 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location]);
-
-  // Prevent body scroll when mobile menu is open
+  // Handle body scroll lock when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      
+      // Lock body scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+      
+      return () => {
+        // Restore body scroll
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      };
     }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [mobileMenuOpen]);
 
   const isActive = (path: string) => location.pathname === path;
@@ -269,13 +275,13 @@ export function Header() {
 
       {/* Mobile Navigation */}
       <div className={cn(
-        "lg:hidden fixed inset-0 z-40 transition-all duration-300 ease-in-out",
-        mobileMenuOpen ? "visible" : "invisible"
+        "lg:hidden fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-xl transition-all duration-300 ease-in-out",
+        mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
       )}>
         {/* Backdrop */}
         <div 
           className={cn(
-            "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300",
+            "absolute inset-0 bg-black/50 transition-opacity duration-300",
             mobileMenuOpen ? "opacity-100" : "opacity-0"
           )}
           onClick={() => setMobileMenuOpen(false)}
@@ -283,34 +289,34 @@ export function Header() {
         
         {/* Menu Panel */}
         <div className={cn(
-          "absolute top-0 right-0 h-full w-full max-w-sm bg-slate-950/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-in-out transform",
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          "absolute top-0 left-0 right-0 h-full bg-slate-950/95 backdrop-blur-xl transform transition-transform duration-300 ease-in-out max-h-screen overflow-hidden",
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}>
-          <div className="flex flex-col h-full overflow-y-auto">
-            {/* Fixed Header */}
-            <div className={cn(
-              "flex items-center justify-between p-6 border-b border-white/10 transition-all duration-300",
-              scrolled ? "bg-slate-950/90 backdrop-blur-md" : "bg-transparent"
-            )}>
-              <Link to="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
-                <img 
-                  src={logo} 
-                  alt="The Cloud Sol" 
-                  className="h-8 w-auto" 
-                />
-                <span className="ml-2 text-xl font-bold bg-gradient-to-r from-sky-300 via-cyan-300 to-white bg-clip-text text-transparent">
-                  The Cloud Sol
-                </span>
-              </Link>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            
-            {/* Scrollable Content */}
+          {/* Header Bar */}
+          <div className={cn(
+            "flex items-center justify-between p-6 border-b border-white/10 transition-all duration-300",
+            scrolled ? "bg-slate-950/90 backdrop-blur-md" : "bg-transparent"
+          )}>
+            <Link to="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+              <img 
+                src={logo} 
+                alt="The Cloud Sol" 
+                className="h-8 w-auto" 
+              />
+              <span className="ml-2 text-xl font-bold bg-gradient-to-r from-sky-300 via-cyan-300 to-white bg-clip-text text-transparent">
+                The Cloud Sol
+              </span>
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          
+          {/* Scrollable Content */}
+          <div className="flex flex-col h-[calc(100%-88px)] overflow-y-auto">
             <nav className="flex-1 px-6 py-6 space-y-2">
               {navigation.map((item) => (
                 <Link
@@ -362,7 +368,6 @@ export function Header() {
               </div>
             </nav>
 
-            {/* Fixed Footer */}
             <div className="p-6 pt-0 border-t border-white/10">
               <Button 
                 asChild 

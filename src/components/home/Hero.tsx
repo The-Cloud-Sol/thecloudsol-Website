@@ -18,7 +18,7 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/30 to-slate-950" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-slate-950 to-slate-950" />
       </div>
-      <div className="relative z-10 flex min-h-screen items-center pt-24 md:pt-0">
+      <div className="relative z-10 flex min-h-screen items-center pt-20 md:pt-24 lg:pt-28">
         <div className="container mx-auto px-6 text-center text-white">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-mono uppercase tracking-[0.35em] text-white/70">
             ∆ Cloud Computing Excellence | Digital Transformation
