@@ -84,8 +84,25 @@ export default async function handler(req: any, res: any) {
       );
     }
 
+    // Debug: Log environment variables (without sensitive data)
+    console.log('Environment check:', {
+      NODE_ENV: process.env.NODE_ENV,
+      SMTP_HOST: process.env.SMTP_HOST,
+      SMTP_PORT: process.env.SMTP_PORT,
+      SMTP_USER: process.env.SMTP_USER ? 'SET' : 'NOT_SET',
+      SMTP_PASSWORD: process.env.SMTP_PASSWORD ? 'SET' : 'NOT_SET',
+      COMPANY_EMAIL: process.env.COMPANY_EMAIL
+    });
+
     if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      throw new Error('SMTP credentials are missing');
+      console.error('Missing SMTP credentials:', {
+        SMTP_USER: !!process.env.SMTP_USER,
+        SMTP_PASSWORD: !!process.env.SMTP_PASSWORD
+      });
+      return res.status(500).json({
+        success: false,
+        error: 'Email service configuration incomplete'
+      });
     }
 
     await transporter.verify();
