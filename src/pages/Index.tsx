@@ -24,21 +24,21 @@ const clientLogos = [
 
 // Partner logos from assets/Partners directory
 const partnerLogos = [
-  "/assets/Partners/67096ed995c868888ed718321b136a68.png",
-  "/assets/Partners/PikPng.com_google-logo-png_1836434.png",
-  "/assets/Partners/PikPng.com_run-dmc-png_5240809.png",
-  "/assets/Partners/PikPng.com_thundercats-logo-png_2735611.png",
-  "/assets/Partners/image (1).png",
-  "/assets/Partners/image (2).png",
-  "/assets/Partners/image (3).png",
-  "/assets/Partners/image (4).png",
-  "/assets/Partners/image (5).png",
-  "/assets/Partners/image (6).png",
-  "/assets/Partners/image (7).png",
-  "/assets/Partners/image (8).png",
-  "/assets/Partners/image (9).png",
-  "/assets/Partners/image.png",
-  "/assets/Partners/microsoft-sharepoint-logo-png_seeklogo-375997.png"
+  "/assets/Partners/Partners/67096ed995c868888ed718321b136a68.png",
+  "/assets/Partners/Partners/PikPng.com_google-logo-png_1836434.png",
+  "/assets/Partners/Partners/PikPng.com_run-dmc-png_5240809.png",
+  "/assets/Partners/Partners/PikPng.com_thundercats-logo-png_2735611.png",
+  "/assets/Partners/Partners/image (1).png",
+  "/assets/Partners/Partners/image (2).png",
+  "/assets/Partners/Partners/image (3).png",
+  "/assets/Partners/Partners/image (4).png",
+  "/assets/Partners/Partners/image (5).png",
+  "/assets/Partners/Partners/image (6).png",
+  "/assets/Partners/Partners/image (7).png",
+  "/assets/Partners/Partners/image (8).png",
+  "/assets/Partners/Partners/image (9).png",
+  "/assets/Partners/Partners/image.png",
+  "/assets/Partners/Partners/microsoft-sharepoint-logo-png_seeklogo-375997.png"
 ];
 
 const Index = () => {
