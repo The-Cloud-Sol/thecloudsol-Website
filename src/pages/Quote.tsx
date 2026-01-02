@@ -44,7 +44,7 @@ export default function Quote() {
     phone: "",
     company: "",
     designation: "",
-    details: "",
+    message: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,7 +76,7 @@ export default function Quote() {
           phone: "",
           company: "",
           designation: "",
-          details: "",
+          message: "",
         });
         setSelectedServices([]);
       } else {
@@ -300,11 +300,11 @@ export default function Quote() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="details">Project Description *</Label>
+                  <Label htmlFor="message">Project Description *</Label>
                   <Textarea
-                    id="details"
-                    name="details"
-                    value={formData.details}
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
                     placeholder="Outline your objectives, success metrics, current platforms, and any blockers..."
                     rows={6}
