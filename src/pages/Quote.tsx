@@ -59,7 +59,7 @@ export default function Quote() {
         },
         body: JSON.stringify({
           ...formData,
-          selectedServices,
+          services: selectedServices,
         }),
       });
 
