@@ -5,29 +5,21 @@ import { ChevronLeft, ChevronRight, Quote, Sparkles, Star } from "lucide-react";
 const testimonials = [
   {
     quote: "The Cloud Sol transformed our entire IT infrastructure. Their Azure expertise helped us reduce costs by 40% while improving performance significantly.",
-    author: "Sarah Johnson",
-    role: "CTO, TechVentures Inc.",
     company: "TechVentures Inc.",
     rating: 4
   },
   {
     quote: "Their Microsoft 365 implementation was flawless. Our team's collaboration has never been better, and the training they provided was exceptional.",
-    author: "Michael Chen",
-    role: "IT Director, Global Finance Corp",
     company: "Global Finance Corp",
     rating: 5
   },
   {
     quote: "We migrated to AWS with The Cloud Sol's guidance, and the results exceeded our expectations. Professional, knowledgeable, and always available.",
-    author: "Emily Rodriguez",
-    role: "VP of Operations, HealthPlus",
     company: "HealthPlus",
     rating: 3
   },
   {
     quote: "The specialized training programs helped our team become cloud-certified. The Cloud Sol is a true partner in our digital transformation journey.",
-    author: "David Kim",
-    role: "HR Director, EduTech Solutions",
     company: "EduTech Solutions",
     rating: 5
   },
@@ -91,12 +83,11 @@ export function TestimonialsCarousel() {
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center">
                   <span className="text-lg font-bold text-sky-300">
-                    {testimonials[currentIndex].author.charAt(0)}
+                    {testimonials[currentIndex].company.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-white text-lg">{testimonials[currentIndex].author}</p>
-                  <p className="text-sm text-white/70">{testimonials[currentIndex].role}</p>
+                  <p className="font-semibold text-white text-lg">{testimonials[currentIndex].company}</p>
                 </div>
               </div>
               {/* 5-Star Rating */}

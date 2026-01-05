@@ -125,11 +125,10 @@ Submitted via The Cloud Sol website.
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             line-height: 1.6;
             color: #1e293b;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-            background-attachment: fixed;
+            background-color: #f8fafc;
             padding: 20px;
             min-height: 100vh;
         }
@@ -137,20 +136,17 @@ Submitted via The Cloud Sol website.
         .container {
             max-width: 650px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+            background-color: #ffffff;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
-            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 0;
+            background-color: #4f46e5;
+            padding: 30px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
         
         .header::before {
@@ -471,7 +467,7 @@ Submitted via The Cloud Sol website.
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <div class="logo">CS</div>
+                <img src="https://www.thecloudsol.com/logo.png" alt="The Cloud Sol Logo" style="width: 50px; height: 50px; border-radius: 12px; background: white; padding: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: block; margin: 0 auto;">
                 <h1>New Contact Form Submission <span style="display: inline-block; background: #ef4444; color: white; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-left: 10px;">HIGH PRIORITY</span></h1>
                 <p class="header-subtitle">Cloud Solutions & Digital Transformation</p>
             </div>
@@ -579,11 +575,10 @@ www.thecloudsol.com
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             line-height: 1.6;
             color: #1e293b;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-            background-attachment: fixed;
+            background-color: #f8fafc;
             padding: 20px;
             min-height: 100vh;
         }
@@ -591,20 +586,17 @@ www.thecloudsol.com
         .container {
             max-width: 650px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+            background-color: #ffffff;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
-            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 0;
+            background-color: #4f46e5;
+            padding: 30px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
         
         .header::before {
@@ -975,7 +967,7 @@ www.thecloudsol.com
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <div class="logo">CS</div>
+                <img src="https://www.thecloudsol.com/logo.png" alt="The Cloud Sol Logo" style="width: 50px; height: 50px; border-radius: 12px; background: white; padding: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: block; margin: 0 auto;">
                 <h1>Dear ${name},</h1>
                 <p class="header-subtitle">Cloud Solutions & Digital Transformation</p>
             </div>
