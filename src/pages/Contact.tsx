@@ -163,7 +163,7 @@ export default function Contact() {
                 <div className="mt-6 space-y-4">
                   {[
                     { icon: Mail, title: "Email Us", value: "info@thecloudsol.com", href: "mailto:info@thecloudsol.com" },
-                    { icon: Phone, title: "Call Us", value: "+1 (234) 567-890", href: "tel:+1234567890" },
+                    { icon: Phone, title: "Call Us", value: "+91 9662330413", href: "tel:+919662330413" },
                     {
                       icon: MapPin,
                       title: "Visit Our Hub",
