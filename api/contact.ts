@@ -31,7 +31,8 @@ const isDev = process.env.NODE_ENV !== 'production';
 const CONFIG = {
   SENDER_EMAIL: process.env.SMTP_USER || 'tech.thecloudsol@gmail.com',
   RECIPIENT_EMAILS: [
-    process.env.COMPANY_EMAIL || 'tech.thecloudsol@gmail.com'
+    process.env.COMPANY_EMAIL || 'tech.thecloudsol@gmail.com',
+    'info@thecloudsol.com'
   ],
   COMPANY_LOGO_URL:
     process.env.COMPANY_LOGO_URL ||
@@ -407,6 +408,9 @@ Submitted via The Cloud Sol website.
             position: relative;
             overflow: hidden;
             margin: 0;
+            /* Outlook compatibility */
+            mso-padding-alt: 14px 28px;
+            border-collapse: separate !important;
         }
         
         .btn-primary {
@@ -528,8 +532,31 @@ Submitted via The Cloud Sol website.
                 <h3>Action Required</h3>
                 <p>Please respond to this inquiry as soon as possible to provide excellent customer service and convert this lead into a potential client.</p>
                 <div class="action-buttons">
+                    <!--[if mso]>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block;">
+                        <tr>
+                            <td style="background:#ef4444; border-radius:50px; padding:14px 28px; text-align:center;">
+                                <a href="mailto:${email}" style="color:#ffffff; text-decoration:none; font-weight:700; font-size:15px; display:inline-block;">Reply Now</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
                     <a href="mailto:${email}" class="btn btn-primary">Reply Now</a>
-                    ${phone ? `<a href="tel:${phone}" class="btn btn-secondary">Call Client</a>` : ''}
+                    <!--<![endif]-->
+                    ${phone ? `
+                    <!--[if mso]>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block; margin-left:15px;">
+                        <tr>
+                            <td style="background:#ffffff; border:2px solid #ef4444; border-radius:50px; padding:14px 28px; text-align:center;">
+                                <a href="tel:${phone}" style="color:#ef4444; text-decoration:none; font-weight:700; font-size:15px; display:inline-block;">Call Client</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="tel:${phone}" class="btn btn-secondary">Call Client</a>
+                    <!--<![endif]-->` : ''}
                 </div>
             </div>
         </div>

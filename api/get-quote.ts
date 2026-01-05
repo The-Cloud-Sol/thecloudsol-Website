@@ -484,6 +484,9 @@ This email was sent from quote form on The Cloud Sol website.`,
             position: relative;
             overflow: hidden;
             margin: 0;
+            /* Outlook compatibility */
+            mso-padding-alt: 14px 28px;
+            border-collapse: separate !important;
         }
         
         .btn-primary {
@@ -614,8 +617,30 @@ This email was sent from quote form on The Cloud Sol website.`,
                 <h3>Action Required</h3>
                 <p>Please review this quote request and respond to client as soon as possible. This is a high-value opportunity that requires prompt attention.</p>
                 <div class="action-buttons">
+                    <!--[if mso]>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block;">
+                        <tr>
+                            <td style="background:#10b981; border-radius:50px; padding:14px 28px; text-align:center;">
+                                <a href="mailto:${email}" style="color:#ffffff; text-decoration:none; font-weight:700; font-size:15px; display:inline-block;">Reply Now</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
                     <a href="mailto:${email}" class="btn btn-primary">Reply Now</a>
+                    <!--<![endif]-->
+                    <!--[if mso]>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block; margin-left:15px;">
+                        <tr>
+                            <td style="background:#ffffff; border:2px solid #10b981; border-radius:50px; padding:14px 28px; text-align:center;">
+                                <a href="tel:${phone}" style="color:#10b981; text-decoration:none; font-weight:700; font-size:15px; display:inline-block;">Call Client</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
                     <a href="tel:${phone}" class="btn btn-secondary">Call Client</a>
+                    <!--<![endif]-->
                 </div>
             </div>
         </div>
