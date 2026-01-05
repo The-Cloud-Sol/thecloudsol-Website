@@ -997,15 +997,6 @@ www.thecloudsol.com
                 </ul>
             </div>
 
-            <div class="resources">
-                <h3>Helpful Resources</h3>
-                <ul>
-                    <li><a href="https://www.thecloudsol.com/services">Our Services</a></li>
-                    <li><a href="https://www.thecloudsol.com/blog">Latest Blog Posts</a></li>
-                    <li><a href="https://www.thecloudsol.com/faq">Frequently Asked Questions</a></li>
-                </ul>
-            </div>
-
             <div class="signature">
                 <p>We look forward to assisting you with your cloud solutions!</p>
                 <p><strong>Warm regards,</strong></p>

@@ -4,19 +4,19 @@ import { ChevronLeft, ChevronRight, Quote, Sparkles, Star } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "The Cloud Sol transformed our entire IT infrastructure. Their Azure expertise helped us reduce costs by 40% while improving performance significantly.",
-    company: "TechVentures Inc.",
-    rating: 4
-  },
-  {
-    quote: "Their Microsoft 365 implementation was flawless. Our team's collaboration has never been better, and the training they provided was exceptional.",
-    company: "Global Finance Corp",
+    quote: "Excellent work and outstanding support throughout the entire process. The team was responsive, professional, and attentive to every detail. Truly appreciate the effort and dedication — keep up the great work!",
+    company: "Seastarr International Private Limited",
     rating: 5
   },
   {
-    quote: "We migrated to AWS with The Cloud Sol's guidance, and the results exceeded our expectations. Professional, knowledgeable, and always available.",
-    company: "HealthPlus",
-    rating: 3
+    quote: "Good service with a smooth and hassle-free experience. The team delivered exactly what was promised and ensured timely support whenever needed. Overall, a reliable and professional service.",
+    company: "MAHI SYSTEMS PVT LTD",
+    rating: 5
+  },
+  {
+    quote: "Great service from start to finish. The team was highly supportive, knowledgeable, and always ready to assist with quick solutions. A truly professional experience — highly recommended 👍",
+    company: "Indian Switchgears and consultants",
+    rating: 5
   },
   {
     quote: "The specialized training programs helped our team become cloud-certified. The Cloud Sol is a true partner in our digital transformation journey.",
