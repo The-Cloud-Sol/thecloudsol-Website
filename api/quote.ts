@@ -517,14 +517,14 @@ This email was sent from quote form on The Cloud Sol website.`,
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <img src="https://www.thecloudsol.com/logo.png" alt="The Cloud Sol Logo" style="width: 50px; height: 50px; border-radius: 12px; background: white; padding: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: block; margin: 0 auto;">
+                <h1 style="color: #ffffff; font-size: 32px; font-weight: 700; text-align: center; margin: 0 0 15px 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: -0.5px;">TheCloudSol</h1>
                 <h1>New Quote Request <span style="display: inline-block; background: #10b981; color: white; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-left: 10px;">HIGH VALUE</span></h1>
                 <p class="header-subtitle">Cloud Solutions & Digital Transformation</p>
             </div>
         </div>
         <div class="content">
             <div style="text-align: center; margin-bottom: 35px;">
-                <div class="alert-icon"></div>
+                <div style="font-size: 48px; margin-bottom: 20px;">💰</div>
                 <p style="font-size: 18px; color: #475569; line-height: 1.7; max-width: 550px; margin: 0 auto;">
                     A potential client has requested a quote for your services. This is a high-value opportunity that requires immediate attention.
                 </p>
@@ -1019,14 +1019,14 @@ Website: www.thecloudsol.com
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <img src="https://www.thecloudsol.com/logo.png" alt="The Cloud Sol Logo" style="width: 50px; height: 50px; border-radius: 12px; background: white; padding: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: block; margin: 0 auto;">
+                <h1 style="color: #ffffff; font-size: 32px; font-weight: 700; text-align: center; margin: 0 0 15px 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: -0.5px;">TheCloudSol</h1>
                 <h1>Dear ${name},</h1>
                 <p class="header-subtitle">Cloud Solutions & Digital Transformation</p>
             </div>
         </div>
         <div class="content">
             <div style="text-align: center; margin-bottom: 30px;">
-                <div class="welcome-icon"></div>
+                <div style="font-size: 48px; margin-bottom: 20px;">✨</div>
                 <p style="font-size: 18px; color: #475569; line-height: 1.7; max-width: 500px; margin: 0 auto;">
                     Thank you for your interest in <strong style="color: #667eea;">The Cloud Sol</strong>'s services! We've received your quote request and our team is excited to work with you.
                 </p>
