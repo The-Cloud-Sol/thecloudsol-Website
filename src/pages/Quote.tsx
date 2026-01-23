@@ -198,7 +198,7 @@ export default function Quote() {
               <p className="text-sm uppercase tracking-[0.4em] text-sky-200">Need help scoping?</p>
               <p className="mt-3 text-white/80">
                 Email <a href="mailto:info@thecloudsol.com" className="text-sky-200 underline">info@thecloudsol.com</a> or call{" "}
-                <a href="tel:+1234567890" className="text-sky-200 underline">+1 (234) 567-890</a> for guided intake.
+                <a href="tel:+919662330413" className="text-sky-200 underline">+91 9662330413</a> for guided intake.
               </p>
             </div>
           </div>
