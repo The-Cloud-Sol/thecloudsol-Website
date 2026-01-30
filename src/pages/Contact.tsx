@@ -175,8 +175,7 @@ export default function Contact() {
                             title: "Australia ",
                             value: "1 Horwood Pl, Parramatta 2150, NSW, Australia",
                             href: "https://www.google.com/maps/search/?api=1&query=1+Horwood+Pl+Parramatta+2150+NSW+Australia"
-                          }
-                        },
+                          },
                     {
                       icon: Clock,
                       title: "Fast Response Window",
