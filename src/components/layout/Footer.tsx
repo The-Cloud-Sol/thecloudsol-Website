@@ -97,10 +97,31 @@ export function Footer() {
                   +91 9662330413
                 </a>
               </li>
+              
               <li className="flex items-start gap-2 text-sm text-primary-foreground/80">
-                <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                <span>436, Vihav Trade Center,  Near Waves Club, Bhayli, Vadodara, Gujarat 391410 </span>
-              </li>
+                  <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=436+Vihav+Trade+Center+Near+Waves+Club+Bhayli+Vadodara+Gujarat+391410"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        436, Vihav Trade Center, Near Waves Club, Bhayli, Vadodara, Gujarat 391410, India
+                      </a>
+                    </li>
+                    
+                    <li className="flex items-start gap-2 text-sm text-primary-foreground/80">
+                      <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=1+Horwood+Pl+Parramatta+2150+NSW+Australia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        1 Horwood Pl, Parramatta 2150, NSW, Australia
+                      </a>
+                    </li>
+
             </ul>
           </div>
         </div>
