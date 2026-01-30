@@ -165,7 +165,6 @@ export default function Contact() {
                     { icon: Mail, title: "Email Us", value: "info@thecloudsol.com", href: "mailto:info@thecloudsol.com" },
                     { icon: Phone, title: "Call Us", value: "+91 9662330413", href: "tel:+919662330413" },
                     {
-                      {
                             icon: MapPin,
                             title: "India ",
                             value: "436, Vihav Trade Center, Near Waves Club, Bhayli, Vadodara, Gujarat 391410, India",
@@ -177,9 +176,7 @@ export default function Contact() {
                             value: "1 Horwood Pl, Parramatta 2150, NSW, Australia",
                             href: "https://www.google.com/maps/search/?api=1&query=1+Horwood+Pl+Parramatta+2150+NSW+Australia"
                           }
-
-                      
-                    },
+                        },
                     {
                       icon: Clock,
                       title: "Fast Response Window",
