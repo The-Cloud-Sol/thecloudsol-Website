@@ -167,8 +167,8 @@ export default function Contact() {
                     {
                             icon: MapPin,
                             title: "India ",
-                            value: "436, Vihav Trade Center, Near Waves Club, Bhayli, Vadodara, Gujarat 391410, India",
-                            href: "https://www.google.com/maps/search/?api=1&query=436+Vihav+Trade+Center+Near+Waves+Club+Bhayli+Vadodara+Gujarat+391410"
+                            value: "Vadodara, Gujarat 391410, India",
+                            href: "https://www.google.com/maps/search/?api=1&query=Bhayli+Vadodara+Gujarat+391410"
                           },
                           {
                             icon: MapPin,
