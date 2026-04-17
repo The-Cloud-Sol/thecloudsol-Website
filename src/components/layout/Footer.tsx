@@ -106,7 +106,7 @@ export function Footer() {
                         rel="noopener noreferrer"
                         className="hover:underline"
                       >
-                        436, Vihav Trade Center, Near Waves Club, Bhayli, Vadodara, Gujarat 391410, India
+                       Vadodara, Gujarat 391410, India
                       </a>
                     </li>
                     
