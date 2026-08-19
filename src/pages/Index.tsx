@@ -19,6 +19,10 @@ const clientLogos = [
   "/assets/Clients Logo/seastarr_international_logo.jpg",
   "/assets/Clients Logo/shrihari.png",
   "/assets/Clients Logo/tmpqdn9_n_2.webp"
+  "/assets/Clients Logo/208f3b_1b7dd7d71cdc4b8c81cfc6886bebec52~mv2_d_1200_1200_s_2.jpg",
+  "/assets/Clients Logo/Technoprism-Logo-Transparent-BG-1.webp",
+  "/assets/Clients Logo/infotech-header.png",
+  "/assets/Clients Logo/uvr-logo-nav-Bgw2IkTx.webp"
 ];
 
 // Partner logos from assets/Partners directory
