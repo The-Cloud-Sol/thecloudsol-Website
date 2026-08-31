@@ -11,7 +11,6 @@ const clientLogos = [
   "/assets/Clients Logo/Final Wht Tr (1).png",
   "/assets/Clients Logo/Integra Engineering.png",
   "/assets/Clients Logo/Mahi System Pvt Ltd.png",
-  "/assets/Clients Logo/decon-Logo.png",
   "/assets/Clients Logo/logo-bulwark-systems.png",
   "/assets/Clients Logo/logo.png",
   "/assets/Clients Logo/logo1.png",
